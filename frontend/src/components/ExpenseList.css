@@ -1,0 +1,224 @@
+/* Container holding all expense cards */
+.expense-container {
+    display: grid;
+    /* Create a responsive grid with minimum card width of 220px */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    gap: 15px;
+    margin-top: 20px;
+    /* Remove justify-items to let cards fill the grid cell naturally */
+    /* justify-items: center; <--- REMOVED for better grid filling */
+
+    /* Tablet/Medium Screen Adjustment */
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+    }
+
+    /* Mobile Screen Adjustment */
+    @media (max-width: 480px) {
+        /* Force a single column layout on smaller screens for readability */
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+/* Fade animation transitions for adding/removing cards */
+.fade-enter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms ease-in, transform 500ms ease-in;
+}
+
+.fade-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+}
+
+/* Expense card wrapper (the div that wraps the card in CSSTransition) */
+.expense-card-wrapper {
+    width: 100%;
+}
+
+/* Expense card */
+.expense-card {
+    width: 100%;
+    /* Removed max-width to ensure it fills the grid column completely */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-left 0.3s ease;
+    background: #fff;
+    border-left: 6px solid transparent; /* for priority color */
+    padding: 0; /* Let MUI CardContent handle padding */
+    margin: 0;
+    overflow: hidden; /* Prevent content overflow */
+}
+
+/* Hover effect */
+.expense-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Priority colors */
+.expense-card.high-priority { 
+    border-left-color: #f44336; 
+}
+
+.expense-card.medium-priority { 
+    border-left-color: #ff9800; 
+}
+
+.expense-card.low-priority { 
+    border-left-color: #4caf50; 
+}
+
+/* Recurring highlight */
+.expense-card.recurring { 
+    background: #e3f2fd; 
+}
+
+/* Card content wrapper (MUI CardContent) */
+.expense-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Increased gap for better spacing */
+    padding: 16px;
+}
+
+/* Title (MUI Typography variant="h6") */
+.expense-card-content h6 {
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 4px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* Amount text - special styling */
+.expense-card-content .amount {
+    font-weight: 600;
+    color: #1976d2;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* General text lines (MUI Typography) */
+.expense-card-content p {
+    margin: 0;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Specific content types */
+.expense-card-content .date { 
+    font-size: 12px; 
+    color: #999; 
+}
+
+.expense-card-content .description { 
+    font-style: italic; 
+    color: #666;
+    margin-top: 4px;
+}
+
+.expense-card-content .recurring { 
+    font-weight: 500; 
+    color: #1976d2;
+}
+
+.expense-card-content .budget { 
+    font-weight: 500; 
+    color: #2e7d32;
+}
+
+.expense-card-content .payment { 
+    font-weight: 500; 
+    color: #512da8;
+}
+
+/* Priority chip styling (MUI Chip) */
+.expense-card-content .priority-chip {
+    align-self: flex-start;
+    margin: 4px 0;
+}
+
+/* Tags container */
+.expense-card-content .tags { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 6px; 
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+
+/* Buttons container (MUI Stack) */
+.expense-card-content .actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Button sizing for cards */
+.expense-card-content .actions button {
+    flex: 1;
+    min-width: 80px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .expense-card-content { 
+        gap: 6px;
+        padding: 14px;
+    }
+    
+    .expense-card-content h6 { 
+        font-size: 1rem; 
+    }
+    
+    .expense-card-content p { 
+        font-size: 13px; 
+    }
+}
+
+@media (max-width: 480px) {
+    .expense-card { 
+        width: 100%;
+    }
+    
+    .expense-card-content { 
+        gap: 6px;
+        padding: 12px;
+    }
+    
+    .expense-card-content h6 { 
+        font-size: 0.95rem; 
+    }
+    
+    .expense-card-content p { 
+        font-size: 13px; 
+    }
+    
+    .expense-card-content .actions button {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
+
+/* Ensure smooth scrolling for the container if needed */
+.expense-container-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
